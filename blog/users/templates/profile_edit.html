@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(135deg, #f9fafc, #eef3ff);
+    }
+
+    .edit-profile-container {
+        max-width: 850px;
+        margin: 40px auto;
+        padding: 20px;
+    }
+
+    .edit-profile-card {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(12px);
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        padding: 50px 40px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .edit-profile-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Profile Image */
+    .profile-img-wrapper {
+        text-align: center;
+        margin-bottom: 25px;
+        position: relative;
+    }
+
+    .profile-img-wrapper img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: contain;
+        border: 5px solid #fff;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .profile-img-wrapper img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .profile-img-wrapper label {
+        position: absolute;
+        bottom: 12px;
+        right: 42%;
+        background: #0d6efd;
+        color: #fff;
+        padding: 8px 10px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background 0.3s;
+        box-shadow: 0 3px 10px rgba(13, 110, 253, 0.3);
+    }
+
+    .profile-img-wrapper label:hover {
+        background: #0a58ca;
+    }
+
+    .hidden-input {
+        display: none;
+    }
+
+    /* Form Styling */
+    form {
+        margin-top: 20px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px 25px;
+    }
+
+    .form-grid .full-width {
+        grid-column: span 2;
+    }
+
+    .form-label {
+        font-weight: 600;
+        margin-bottom: 6px;
+        display: block;
+        color: #444;
+    }
+
+    .form-control {
+        border-radius: 12px;
+        padding: 12px 16px;
+        border: 1px solid #ddd;
+        transition: all 0.2s ease;
+    }
+
+    .form-control:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 8px rgba(13, 110, 253, 0.25);
+    }
+
+    /* Buttons */
+    .btn-save {
+        background: linear-gradient(90deg, #0d6efd, #0a58ca);
+        color: white;
+        font-weight: 600;
+        border-radius: 12px;
+        padding: 14px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-save:hover {
+        background: linear-gradient(90deg, #0a58ca, #084298);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(13, 110, 253, 0.25);
+    }
+
+    .btn-back {
+        border-radius: 12px;
+        padding: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-back:hover {
+        transform: translateY(-2px);
+        background: #f1f3f5;
+    }
+</style>
+
+<div class="edit-profile-container">
+    <div class="edit-profile-card">
+        <!-- Profile Picture -->
+        <div class="profile-img-wrapper">
+            <img id="profilePreview" src="{{ request.user.profile_image.url|default:'/static/images/default-profile.png' }}" alt="Profile Picture">
+            <label for="id_profile_image" title="Change Profile Picture">📷</label>
+        </div>
+
+        <h3 class="text-center mb-4 fw-bold">Edit Your Profile</h3>
+        
+        <!-- Form -->
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-grid">
+                {% for field in form %}
+                    <div class="{% if field.name == 'bio' or field.name == 'about' %}full-width{% endif %}">
+                        <label class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <br>
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="btn btn-save w-100 mt-4">💾 Save Changes</button>
+        </form>
+
+        <a href="{% url 'my_profile' %}" class="btn btn-outline-secondary btn-back w-100 mt-3">⬅ Back to Profile</a>
+    </div>
+</div>
+
+<script>
+    // Live profile image preview
+    const fileInput = document.getElementById("id_profile_image");
+    const preview = document.getElementById("profilePreview");
+
+    if(fileInput){
+        fileInput.classList.add("hidden-input");
+        fileInput.addEventListener("change", function(){
+            const file = this.files[0];
+            if(file){
+                const reader = new FileReader();
+                reader.onload = function(e){
+                    preview.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+</script>
+{% endblock %}

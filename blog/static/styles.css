@@ -1,0 +1,382 @@
+/* ========== GENERAL ========== */
+body {
+    background-color: #f9fafc;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 70px;
+    color: #212529;
+    scroll-behavior: smooth;
+}
+
+/* ========== NAVBAR ========== */
+.navbar {
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .navbar-brand {
+    color: white !important;
+    font-weight: 700;
+    font-size: 1.4rem;
+}
+
+.navbar .nav-link,
+.navbar .dropdown-toggle {
+    color: white !important;
+    font-weight: 500;
+    padding: 10px 16px;
+    border-radius: 6px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.navbar .nav-link:hover,
+.navbar .dropdown-menu a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffc107 !important;
+}
+
+.navbar .dropdown-menu {
+    min-width: 220px;
+    border-radius: 8px;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.user-image {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+
+.username {
+    font-weight: 500;
+    margin-left: 8px;
+}
+
+@media (max-width: 992px) {
+    .navbar-collapse {
+        background-color: rgba(0, 0, 0, 0.75);
+        padding: 10px;
+        border-radius: 0 0 12px 12px;
+    }
+
+    .dropdown-menu {
+        background-color: white;
+    }
+
+    .navbar .nav-link,
+    .dropdown-item {
+        color: #212529 !important;
+    }
+}
+
+.dropdown .btn-outline-light:hover {
+    background-color: white !important;
+    color: black !important;
+}
+
+/* ========== CAROUSEL ========== */
+/* Carousel Container */
+.carousel {
+    width: 100vw;
+    height: 75vh;
+    margin-left: calc(-50vw + 50%);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Carousel Item */
+.carousel .carousel-item {
+    height: 75vh;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.6s ease-in-out;
+}
+
+/* Carousel Image */
+.carousel .carousel-item img,
+.carousel-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+/* Overlay Text Container with Blur */
+.carousel-caption {
+    bottom: 15%;
+    left: 5%;
+    max-width: 700px;
+    z-index: 10;
+    position: absolute;
+    color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+
+    /* Blur & Background */
+    background: rgba(0, 0, 0, 0.5); /* fallback for older browsers */
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Caption Heading */
+.carousel-caption h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+/* Caption Paragraph */
+.carousel-caption p {
+    font-size: 1.1rem;
+    color: #f8f9fa;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+/* Button Hover Effect */
+.carousel-caption .btn-outline-light {
+    border: 2px solid #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.carousel-caption .btn-outline-light:hover {
+    background-color: #ffc107;
+    color: #000;
+    border-color: #ffc107;
+    box-shadow: 0 4px 10px rgba(255, 193, 7, 0.6);
+}
+
+/* Carousel Indicators */
+.carousel-indicators [data-bs-target] {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #fff;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.carousel-indicators .active {
+    opacity: 1;
+    background-color: #ffc107;
+}
+
+/* Control Icons */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-size: 2rem 2rem;
+    filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5));
+}
+
+/* Responsive Height Tweak */
+@media (max-width: 768px) {
+    .carousel,
+    .carousel .carousel-item {
+        height: 60vh;
+    }
+
+    .carousel-caption {
+        bottom: 10%;
+        left: 5%;
+        max-width: 90%;
+        font-size: 0.95rem;
+    }
+
+    .carousel-caption h1 {
+        font-size: 1.6rem;
+    }
+
+    .carousel-caption p {
+        font-size: 0.9rem;
+    }
+}
+
+
+/* ========== CATEGORY BUTTONS ========== */
+a.btn.btn-outline-primary {
+    border-radius: 30px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+a.btn.btn-outline-primary:hover {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+/* ========== POST CARDS ========== */
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.card-img-top,
+.post-img {
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.post-card-hover:hover .post-img {
+    transform: scale(1.05);
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.card-text {
+    font-size: 0.95rem;
+    color: #495057;
+}
+
+/* Author Cards */
+.user-card-clean {
+    background-color: #fff;
+    transition: box-shadow 0.3s ease;
+}
+
+.user-card-clean:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+}
+
+.user-card-clean h5 {
+    font-size: 1.1rem;
+}
+
+.user-card-clean .badge {
+    font-size: 0.85rem;
+    border-radius: 20px;
+    font-weight: 500;
+    background-color: #f1f3f5;
+}
+
+
+/* ========== BUTTONS & FORMS ========== */
+button.btn-outline-light,
+button.btn-warning,
+button.btn-light,
+button.btn-primary {
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+button.btn-outline-light:hover,
+button.btn-warning:hover,
+button.btn-light:hover,
+button.btn-primary:hover {
+    background-color: white;
+    color: black !important;
+}
+
+input.form-control,
+select.form-select {
+    border-radius: 8px;
+}
+
+input[type="search"] {
+    width: 250px;
+}
+
+/* ========== FOOTER ========== */
+footer {
+    background-color: #1f1f1f;
+    color: #dee2e6;
+    padding: 60px 0 30px;
+}
+
+footer a {
+    color: #adb5bd;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #ffc107;
+    text-decoration: underline;
+}
+
+footer .bi {
+    font-size: 1.2rem;
+    margin-right: 12px;
+}
+
+
+/* ========== ALERTS ========== */
+.alert {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* ========== SCROLL TO TOP BUTTON ========== */
+button.scroll-top-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1050;
+    border: none;
+    outline: none;
+    background-color: #ffc107;
+    color: #212529;
+    padding: 12px 16px;
+    border-radius: 50%;
+    font-size: 18px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+button.scroll-top-btn:hover {
+    background-color: #e0a800;
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========== MEDIA QUERIES ========== */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    .carousel-caption {
+        font-size: 0.9rem;
+        padding: 12px;
+    }
+
+    input[type="search"] {
+        width: 180px;
+    }
+
+    .carousel {
+        height: 45vh;
+    }
+
+    .card-title {
+        font-size: 1rem;
+    }
+
+    .card-text {
+        font-size: 0.9rem;
+    }
+}

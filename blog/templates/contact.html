@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Contact Us | MyBlog{% endblock %}
+
+{% block content %}
+
+<!-- Header Section -->
+<section class="py-5 bg-light border-bottom">
+  <div class="container text-center">
+    <h1 class="display-5 fw-bold">Get in Touch</h1>
+    <p class="lead text-muted">We’d love to hear from you! Fill out the form or find us at our Mumbai office.</p>
+  </div>
+</section>
+
+<!-- Contact Info + Map Section -->
+<section class="py-5">
+  <div class="container">
+    <div class="row g-5">
+      <!-- Contact Details -->
+      <div class="col-md-5">
+        <h4 class="mb-3">📍 Our Address</h4>
+        <p class="text-muted">
+          MyBlog HQ,<br>
+          Andheri West, Mumbai, Maharashtra,<br>
+          India - 400053
+        </p>
+        <p><strong>Email:</strong> support@myblog.com</p>
+        <p><strong>Phone:</strong> +91 98765 43210</p>
+
+        <!-- Google Map -->
+        <div class="ratio ratio-4x3 rounded shadow-sm mt-3">
+          <iframe
+            src="https://www.google.com/maps?q=andheri%20mumbai&output=embed"
+            frameborder="0"
+            allowfullscreen
+            loading="lazy"
+            aria-hidden="false"
+            tabindex="0"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="col-md-7">
+        <h4 class="mb-3">✉️ Send Us a Message</h4>
+        <form method="post" action="{% url 'contact' %}">
+          {% csrf_token %}
+          {% for field in form %}
+            <div class="mb-3">
+              <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+              {{ field }}
+              {% if field.errors %}
+                <div class="text-danger small">{{ field.errors.as_text|striptags }}</div>
+              {% endif %}
+            </div>
+          {% endfor %}
+          <button type="submit" class="btn btn-primary px-4">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

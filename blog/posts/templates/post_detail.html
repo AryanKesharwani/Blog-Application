@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<style>
+  .post-meta {
+    font-size: 0.9rem;
+    color: #6c757d;
+  }
+  .post-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+  .comment-card {
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
+  }
+</style>
+
+<div class="container py-5">
+
+  <!-- Post Card -->
+  <div class="card shadow-lg border-0 rounded-4 mb-5">
+    {% if post.image %}
+        <div class="ratio ratio-21x9 rounded-top-4 overflow-hidden" style="max-height: 400px;">
+            <img src="{{ post.image.url }}" class="w-100 h-100 object-fit-cover" alt="{{ post.title }}">
+        </div>
+    {% endif %}
+
+    <div class="card-body p-5">
+      <h1 class="fw-bold mb-3">{{ post.title }}</h1>
+      <p class="post-meta mb-3">
+        <i class="bi bi-person-circle"></i> {{ post.author }} &nbsp;|&nbsp;
+        <i class="bi bi-calendar3"></i> {{ post.created_at|date:"F d, Y" }}
+      </p>
+
+      <div class="post-content mb-4">{{ post.content|linebreaks }}</div>
+
+      <div class="mb-4">
+        <strong>Category:</strong> {{ post.category }}<br>
+        <strong>Tags:</strong>
+        {% for tag in post.tags.all %}
+        <span class="badge bg-secondary me-1">{{ tag.name }}</span>
+        {% empty %}
+        <span class="text-muted">No tags</span>
+        {% endfor %}
+      </div>
+
+      <!-- Like Button -->
+      {% if user.is_authenticated %}
+      <form method="post" action="{% url 'post_like' post.pk %}" class="d-flex flex-wrap align-items-center gap-3 mb-4">
+        {% csrf_token %}
+        {% if has_liked %}
+        <button type="submit" class="btn btn-danger rounded-pill px-4">
+          <i class="bi bi-heart-fill me-1"></i> Unlike
+        </button>
+        {% else %}
+        <button type="submit" class="btn btn-outline-primary rounded-pill px-4">
+          <i class="bi bi-heart me-1"></i> Like
+        </button>
+        {% endif %}
+        <span class="text-muted"><i class="bi bi-heart-fill text-danger me-1"></i>{{ post.likes.count }} Likes</span>
+      </form>
+      {% else %}
+      <p><a href="{% url 'login' %}">Login</a> to like this post.</p>
+      {% endif %}
+
+      <!-- Author Controls -->
+      {% if user == post.author %}
+      <div class="d-flex gap-2 mt-3">
+        <a href="{% url 'post_update' post.pk %}" class="btn btn-warning btn-sm rounded-pill">
+          <i class="bi bi-pencil-square me-1"></i> Edit
+        </a>
+        <a href="{% url 'post_delete' post.pk %}" class="btn btn-outline-danger btn-sm rounded-pill">
+          <i class="bi bi-trash3 me-1"></i> Delete
+        </a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Comments Section -->
+  <div class="mb-5">
+    <h4 class="fw-semibold mb-4"><i class="bi bi-chat-dots-fill text-primary me-1"></i> Comments ({{ post.comments.count }})</h4>
+
+    {% for comment in post.comments.all %}
+    <div class="comment-card">
+      <strong>{{ comment.user }}</strong> 
+      <div class="text-muted small mb-2">{{ comment.created_at|naturaltime }}</div>
+      <div>{{ comment.content|linebreaks }}</div>
+    </div>
+    {% empty %}
+    <p class="text-muted">No comments yet.</p>
+    {% endfor %}
+  </div>
+
+  <!-- Add Comment -->
+  {% if user.is_authenticated %}
+  <div class="mb-5">
+    <h5 class="mb-3"><i class="bi bi-pencil-square text-success me-1"></i> Add a Comment</h5>
+    <form method="post">
+      {% csrf_token %}
+      {% for field in comment_form %}
+      <div class="mb-3">
+        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+        {{ field|add_class:"form-control" }}
+        {% if field.errors %}
+        <div class="text-danger small mt-1">{{ field.errors|striptags }}</div>
+        {% endif %}
+      </div>
+      {% endfor %}
+      <button type="submit" class="btn btn-primary rounded-pill">
+        <i class="bi bi-send-fill me-1"></i> Post Comment
+      </button>
+    </form>
+  </div>
+  {% else %}
+  <p><a href="{% url 'login' %}">Login</a> to comment.</p>
+  {% endif %}
+
+  <a href="{% url 'post_list' %}" class="btn btn-outline-secondary mt-4 rounded-pill">
+    <i class="bi bi-arrow-left me-1"></i> Back to Posts
+  </a>
+</div>
+{% endblock %}

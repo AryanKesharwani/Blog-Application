@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Edit Post{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-5">
+            <h2 class="card-title mb-4 text-center">Edit Blog Post</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- Title -->
+                <div class="mb-4">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" name="title" id="title" value="{{ post.title }}" class="form-control" required>
+                </div>
+
+                <!-- Content -->
+                <div class="mb-4">
+                    <label for="content" class="form-label">Content</label>
+                    <textarea name="content" id="content" class="form-control" rows="6" required>{{ post.content }}</textarea>
+                </div>
+
+                <!-- Image Upload -->
+                <div class="mb-4">
+                    <label for="image" class="form-label">Image</label>
+                    {% if post.image %}
+                        <div class="mb-3">
+                            <img src="{{ post.image.url }}" alt="Post image" class="img-thumbnail mb-2" style="max-height: 250px; object-fit: cover;">
+                        </div>
+                    {% endif %}
+                    <input type="file" name="image" id="image" class="form-control">
+                </div>
+
+                <!-- Category -->
+                <div class="mb-4">
+                    <label for="category" class="form-label">Category</label>
+                    <select name="category" id="category" class="form-select">
+                        <option value="">-- Select Category --</option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}" {% if post.category and post.category.id == category.id %}selected{% endif %}>
+                                {{ category.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Tags -->
+                <div class="mb-4">
+                    <label for="tags" class="form-label">Tags</label>
+                    <select name="tags" id="tags" class="form-select" multiple>
+                        {% for tag in tags %}
+                            <option value="{{ tag.id }}" {% if tag in post.tags.all %}selected{% endif %}>{{ tag.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Publish Checkbox -->
+                <div class="form-check mb-4">
+                    <input class="form-check-input" type="checkbox" name="is_published" id="is_published" {% if post.is_published %}checked{% endif %}>
+                    <label class="form-check-label" for="is_published">Publish</label>
+                </div>
+
+                <!-- Submit and Cancel Buttons -->
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success rounded-pill px-4">Update Post</button>
+                    <a href="{% url 'post_detail' post.pk %}" class="btn btn-secondary rounded-pill px-4">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
