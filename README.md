@@ -1,56 +1,57 @@
-📖 Blog Application
+# Blog Application
 
 A modern and responsive blog application built with Django, featuring clean HTML/CSS/Bootstrap templates, dynamic post management, categories, user authentication, and a smooth reading experience.
 
-🚀 Features
-🔐 Authentication & Authorization
+##  Features
 
-User Registration & Login
+### Authentication & Authorization
 
-Secure authentication system
+- User Registration & Login
 
-Role-based access (Admin/User)
+- Secure authentication system
 
-Profile management
+- Role-based access (Admin/User)
 
-📝 Blog CRUD Operations
+- Profile management
 
-Create, Read, Update, Delete posts
+### Blog CRUD Operations
 
-Category-based content organization
+- Create, Read, Update, Delete posts
 
-SEO-friendly post detail pages
+- Category-based content organization
 
-💬 Comment Functionality
+- SEO-friendly post detail pages
 
-Users can comment on posts
+### Comment Functionality
 
-Comment moderation
+- Users can comment on posts
 
-Clean UI for comment threads
+- Comment moderation
 
-🔍 Search, Sorting & Pagination
+- Clean UI for comment threads
 
-Search posts by title/content
+### Search, Sorting & Pagination
 
-Sort by latest, oldest, alphabetical
+- Search posts by title/content
 
-Pagination for blog listings
+- Sort by latest, oldest, alphabetical
 
-🎨 Modern Responsive UI
+- Pagination for blog listings
 
-Built using Bootstrap 5
+### Modern Responsive UI
 
-Fully responsive and mobile-friendly
+- Built using Bootstrap 5
 
-Clean and modern layout
+- Fully responsive and mobile-friendly
 
-🛠️ Tech Stack
+- Clean and modern layout
 
-Django (Backend)
+### Tech Stack
 
-HTML5, CSS3, Bootstrap 5 (Frontend)
+- Django (Backend)
 
-PostgreSQL (Database)
+- HTML5, CSS3, Bootstrap 5 (Frontend)
 
-Django Template Engine
+- PostgreSQL (Database)
+
+- Django Template Engine
